@@ -1,0 +1,23 @@
+'''
+    Funktioniert okay:
+    img = sensor.snapshot()
+    upper_blob = img.find_blobs(threshold_line, False, roi_top)
+    middle_blob = img.find_blobs(threshold_line, False, roi_middle)
+    lower_blob = img.find_blobs(threshold_line, False, roi_bottom)
+
+    if len(upper_blob) == 1:
+        blob_1 = upper_blob[0]
+    elif len(middle_blob) == 1:
+        blob_2 = middle_blob[0]
+    elif len(lower_blob) == 1:
+        blob_3 = lower_blob[0]
+    img.draw_rectangle(blob_1.x1(), blob_1.y1(), blob_1.x2(), blob_1.y2())
+    img.draw_rectangle(blob_2.x1(), blob_2.y1(), blob_2.x2(), blob_2.y2())
+    img.draw_rectangle(blob_3.x1(), blob_3.y1(), blob_3.x2(), blob_3.y2())
+    try:
+        print(blob_1.cx())
+        print(blob_2.cx())
+        print(blob_3.cx())
+    except:
+        print("NONONONO")
+'''

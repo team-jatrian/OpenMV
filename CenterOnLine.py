@@ -12,14 +12,14 @@ threshold_line = [(0, 33, -128, 127, -128, 127)]
 width = sensor.width()
 height = sensor.height()
 
-accuracy = 3
+accuracy = 4
 rois = [None] * accuracy
 xVals = [None] * accuracy
 all_blobs_N = [None] * accuracy
-yVals = [None]
+yVals = []
 while(1):
    img = sensor.snapshot()
-   def splitter():
+   def line_finder():
        for roi in enumerate(rois):
             global all_blobs
 
@@ -42,9 +42,10 @@ while(1):
 
        for i in range(len(all_blobs)):
            global yVals
-           yVals = [None] * len(all_blobs)
-           yVals[i] = all_blobs[i][0].y()
-       ["HEllo" if v is None else v for v in yVals]
-       print(yVals)
-       #lowest_y = min(yVals)
+           if len(yVals) < len(all_blobs):
+               yVals.append(all_blobs[i][0].y())
+       lowest_y = min(yVals)
+       highest_y = max(yVals)
+
+       return lowest_y, highest_y
    splitter()

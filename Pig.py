@@ -15,10 +15,13 @@ meridian = 0
 dots = 0
 dot = 0
 direction = 0
+roi_middle = [0, 25, 80, 35]
 red_led = pyb.LED(1)
 green_led = pyb.LED(2)
 blue_led = pyb.LED(3)
 while(True):
+    img = sensor.snapshot()
+
     red_led.on()
     green_led.on()
     blue_led.on()
@@ -88,6 +91,7 @@ while(True):
             direction = 0
         uart.write("%d"%direction)
         print(direction)
+        middle_checker()
 
     def compare_dots(amount, meridian, equator):
 
@@ -160,8 +164,26 @@ while(True):
        elif amount == 4:
             direction = 3
 
-    color_detection()
+    def middle_detection():
+        all_dots = img.find_blobs(threshold_dots)
+        middle_dots = img.find_blobs(threshold_dots, False, roi_middle)
+        all_amount = len(all_dots)
+        middle_amount = len(middle_dots)
+        for blob in all_dots:
 
+            for blob_middle in middle_dots:
+                if middle_amount == all_amount:
+                    return 9
+                else:
+                    return 0
+                return 0
+    def middle_checker():
+        img.draw_rectangle(roi_middle)
+        dotsInMiddle = middle_detection()
+        if dotsInMiddle == 9:
+            uart.write("%d"%dotsInMiddle)
+            color_detection()
+    middle_checker()
 
 """
 Direction Tabel:
@@ -169,4 +191,5 @@ Direction Tabel:
 1 = Links
 2 = Rechts
 3 = 180° Drehen
+69 = Blobs are in range
 """
