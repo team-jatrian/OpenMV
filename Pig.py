@@ -173,15 +173,16 @@ while(True):
 
             for blob_middle in middle_dots:
                 if middle_amount == all_amount:
-                    return 9
+                    return 5
                 else:
                     return 0
                 return 0
     def middle_checker():
         img.draw_rectangle(roi_middle)
         dotsInMiddle = middle_detection()
-        if dotsInMiddle == 9:
+        if dotsInMiddle == 5:
             uart.write("%d"%dotsInMiddle)
+            print(dotsInMiddle)
             color_detection()
     middle_checker()
 
