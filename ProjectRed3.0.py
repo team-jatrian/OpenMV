@@ -12,7 +12,7 @@ uart = pyb.UART(3, 115200, timeout_char=1000, bits=8, parity=1, stop=2)
 threshold_blobs = [(48, 20, -128, -22, -128, 127)]
 threshold_line = [(39, 0, -11, 127, -128, 127)]
 
-roi_blobs = [0, 180, 320, 60]
+roi_blobs = [0, 150, 320, 90]
 
 height = sensor.height()
 width = sensor.width()
@@ -38,22 +38,25 @@ while(True):
                 roi_left = [0, blob.y(), blob.x(), blob.y() + blob.h()]
                 roi_right = [blob.x(), blob.y(), width - blob.x(), blob.y() + blob.h()]
                 roi_top = [blob.x(), 0, blob.x() + blob.w(), blob.y()]
+                roi_bottom = [blob.x(), blob.y(), blob.w(), height-blob.y()]
 
                 img.draw_rectangle(roi_left, 900)
                 img.draw_rectangle(roi_right, 300)
                 img.draw_rectangle(roi_top, 50)
-
-                upper_line = img.find_blobs(threshold_line, False, roi_top, area_threshold=900)
-                left_line = img.find_blobs(threshold_line, False, roi_left, area_threshold=900)
-                right_line = img.find_blobs(threshold_line, False, roi_right, area_threshold=900)
-
+                try:
+                    upper_line = img.find_blobs(threshold_line, False, roi_top, area_threshold=900)
+                    left_line = img.find_blobs(threshold_line, False, roi_left, area_threshold=900)
+                    right_line = img.find_blobs(threshold_line, False, roi_right, area_threshold=900)
+                    lower_line = img.find_blobs(threshold_line, False, roi_bottom, area_threshold=1500)
+                except:
+                    main()
                 if len(upper_line) != 0:
                     if len(left_line) != 0:
-                        #print("there is left")
                         message = 2
                     elif len(right_line) != 0:
-                        #print("there is right")
                         message = 1
+                if len(lower_line) != 0:
+                    message = 0
 
             elif len(blobs) == 2:
                 first_blob = blobs[0]
@@ -65,14 +68,16 @@ while(True):
                 roi_left_2 = [0, second_blob.y(), second_blob.x(), second_blob.y() + second_blob.h()]
                 roi_right_2 = [second_blob.x(), second_blob.y(), width, second_blob.y() + second_blob.h()]
                 roi_top_2 = [second_blob.x(), 0, second_blob.x() + second_blob.w(), second_blob.y()]
+                try:
+                    upper_line_1 = img.find_blobs(threshold_line, False, roi_top_1, area_threshold=900)
+                    left_line_1 = img.find_blobs(threshold_line, False, roi_left_1, area_threshold=900)
+                    right_line_1 = img.find_blobs(threshold_line, False, roi_right_1, area_threshold=900)
 
-                upper_line_1 = img.find_blobs(threshold_line, False, roi_top_1)
-                left_line_1 = img.find_blobs(threshold_line, False, roi_left_1)
-                right_line_1 = img.find_blobs(threshold_line, False, roi_right_1)
-
-                upper_line_2 = img.find_blobs(threshold_line, False, roi_top_2)
-                left_line_2 = img.find_blobs(threshold_line, False, roi_left_2)
-                right_line_2 = img.find_blobs(threshold_line, False, roi_right_2)
+                    upper_line_2 = img.find_blobs(threshold_line, False, roi_top_2, area_threshold=900)
+                    left_line_2 = img.find_blobs(threshold_line, False, roi_left_2, area_threshold=900)
+                    right_line_2 = img.find_blobs(threshold_line, False, roi_right_2, area_threshold=900)
+                except:
+                    main()
 
                 if len(upper_line_1) != 0:
                     if len(upper_line_2) != 0:
@@ -103,9 +108,12 @@ while(True):
                 roi_right = [rel_blob.x(), rel_blob.y(), width, rel_blob.y() + rel_blob.h()]
                 roi_top = [rel_blob.x(), 0, rel_blob.x() + rel_blob.w(), rel_blob.y()]
 
-                upper_line = img.find_blobs(threshold_line, False, roi_top)
-                left_line = img.find_blobs(threshold_line, False, roi_left)
-                right_line = img.find_blobs(threshold_line, False, roi_right)
+                try:
+                    upper_line = img.find_blobs(threshold_line, False, roi_top, area_threshold=900)
+                    left_line = img.find_blobs(threshold_line, False, roi_left, area_threshold=900)
+                    right_line = img.find_blobs(threshold_line, False, roi_right, area_threshold=900)
+                except:
+                    main()
 
                 if len(upper_line) != 0:
                     if len(left_line) != 0:
