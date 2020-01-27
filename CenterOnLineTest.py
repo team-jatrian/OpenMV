@@ -2,7 +2,7 @@
 import sensor, image, pyb
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
-sensor.set_framesize(sensor.QVGA)
+sensor.set_framesize(sensor.QQVGA)
 sensor.skip_frames(time = 2000)
 
 uart = pyb.UART(3, 115200, timeout_char=1000, bits=8, parity=1, stop=2)
@@ -48,9 +48,10 @@ def sachen():
 
     index_of_low_y = yVals.index(min(yVals))
     index_of_high_y = yVals.index(max(yVals))
-    print(xVals[index_of_high_y])
-    print(xVals[index_of_low_y])
-    uart.write("%d"%xVals[index_of_high_y - xVals[index_of_low_y])
+
+    difference = xVals[index_of_high_y] - xVals[index_of_low_y]
+    print(difference)
+    uart.write("%d"%difference + "\n")
 while(1):
     sachen()
 

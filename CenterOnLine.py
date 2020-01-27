@@ -41,19 +41,21 @@ while(1):
                  if val != []:
                      all_blobs.append(val)
 
-       for i in range(len(all_blobs)):
-           global yVals
-           global xVals
+            for i in range(len(all_blobs)):
+                global yVals
+                global xVals
 
-           if len(yVals) < len(all_blobs):
-               yVals.append(all_blobs[i][0].y())
-               xVals.append(all_blobs[i][0].x())
-       index_of_low_y = yVals.index(min(yVals))
-       index_of_high_y = yVals.index(max(yVals))
-       print(xVals[index_of_high_y])
-       print(xVals[index_of_low_y])
-       lowest_y = min(yVals)
-       highest_y = max(yVals)
+                if len(yVals) < len(all_blobs):
+                    yVals.append(all_blobs[i][0].y())
+                    xVals.append(all_blobs[i][0].x())
+            index_of_low_y = yVals.index(min(yVals))
+            index_of_high_y = yVals.index(max(yVals))
 
-       return lowest_y, highest_y
+            print(xVals[index_of_high_y])
+            print(xVals[index_of_low_y])
+            lowest_y = min(yVals)
+            highest_y = max(yVals)
+            print(lowest_y)
+            print(highest_y)
+            return lowest_y, highest_y
    line_finder()
