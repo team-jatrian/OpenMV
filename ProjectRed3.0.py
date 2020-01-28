@@ -12,7 +12,7 @@ uart = pyb.UART(3, 115200, timeout_char=1000, bits=8, parity=1, stop=2)
 threshold_blobs = [(48, 20, -128, -22, -128, 127)]
 threshold_line = [(39, 0, -11, 127, -128, 127)]
 
-roi_blobs = [0, 150, 320, 90]
+roi_blobs = [0, 130, 320, 110]
 
 height = sensor.height()
 width = sensor.width()
@@ -49,7 +49,8 @@ while(True):
                     right_line = img.find_blobs(threshold_line, False, roi_right, area_threshold=900)
                     lower_line = img.find_blobs(threshold_line, False, roi_bottom, area_threshold=1500)
                 except:
-                    main()
+                    break
+
                 if len(upper_line) != 0:
                     if len(left_line) != 0:
                         message = 2
@@ -77,7 +78,7 @@ while(True):
                     left_line_2 = img.find_blobs(threshold_line, False, roi_left_2, area_threshold=900)
                     right_line_2 = img.find_blobs(threshold_line, False, roi_right_2, area_threshold=900)
                 except:
-                    main()
+                    break
 
                 if len(upper_line_1) != 0:
                     if len(upper_line_2) != 0:
@@ -113,7 +114,7 @@ while(True):
                     left_line = img.find_blobs(threshold_line, False, roi_left, area_threshold=900)
                     right_line = img.find_blobs(threshold_line, False, roi_right, area_threshold=900)
                 except:
-                    main()
+                    break
 
                 if len(upper_line) != 0:
                     if len(left_line) != 0:
