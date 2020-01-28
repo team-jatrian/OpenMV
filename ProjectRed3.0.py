@@ -12,7 +12,7 @@ uart = pyb.UART(3, 115200, timeout_char=1000, bits=8, parity=1, stop=2)
 threshold_blobs = [(48, 20, -128, -22, -128, 127)]
 threshold_line = [(39, 0, -11, 127, -128, 127)]
 
-roi_blobs = [0, 130, 320, 110]
+roi_blobs = [0, 160, 320, 80 ]
 
 height = sensor.height()
 width = sensor.width()
