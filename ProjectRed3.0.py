@@ -12,7 +12,7 @@ uart = pyb.UART(3, 115200, timeout_char=1000, bits=8, parity=1, stop=2)
 threshold_blobs = [(48, 20, -128, -22, -128, 127)]
 threshold_line = [(39, 0, -11, 127, -128, 127)]
 
-roi_blobs = [0, 160, 320, 80 ]
+roi_blobs_detect = [0, 160, 320, 80 ]
 
 height = sensor.height()
 width = sensor.width()
@@ -29,8 +29,12 @@ while(True):
         global message
 
         img = sensor.snapshot()
+        blobs_detect = img.find_blobs(threshold_blobs, False, roi_blobs_detect, merge=True, x_stride=10, y_stride=10, area_threshold=900)
+        first_blobs_y = blob_detect[0].y()
+        rois_height = first_blobs_y + 20
+        roi_blobs = [0, rois_height, width, height - rois_height]
         blobs = img.find_blobs(threshold_blobs, False, roi_blobs, merge=True, x_stride=10, y_stride=10, area_threshold=900)
-        if len(blobs) > 0:
+        if len(blobs_detect) > 0:
             communication(5)
         for blob in blobs:
             img.draw_rectangle(blob.rect())
