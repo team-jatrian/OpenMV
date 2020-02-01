@@ -1,3 +1,6 @@
+#created by Sin(an)
+#Version 3.5
+
 import sensor, image, pyb
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
