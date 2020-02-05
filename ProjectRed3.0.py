@@ -22,8 +22,7 @@ while(True):
     pyb.LED(1).on()
 
     def communication(messageToSend):
-        if messageToSend != 2:
-            print(messageToSend)
+        print(messageToSend)
         uart.write("%d"%messageToSend)
 
     def main():
