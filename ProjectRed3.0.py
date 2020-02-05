@@ -181,13 +181,10 @@ while(True):
                         if len(upper_line_3) > 0:
                             rel_dots.append(third_blob)
 
-                        print(len(rel_dots))
                         if len(rel_dots) == 2:
-                            print("here3")
                             message = 3
 
                         if len(rel_dots) == 1:
-                            print("here")
                             blob = rel_dots[0]
                             roi_left = [0, blob.y(), blob.x(), blob.y() + blob.h()]
                             roi_right = [blob.x(), blob.y(), width - blob.x(), blob.y() + blob.h()]
@@ -197,7 +194,6 @@ while(True):
                             right_line = img.find_blobs(threshold_line, False, roi_right, area_threshold=900)
 
                             if len(upper_line) != 0:
-                                print("here4")
                                 if len(left_line) != 0:
                                     message = 2
                                 elif len(right_line) != 0:
