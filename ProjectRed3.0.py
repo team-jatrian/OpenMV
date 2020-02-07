@@ -1,5 +1,5 @@
 #created by Sin(an)
-#Version 3.5
+#Version 3.6, drive back
 
 import sensor, image, pyb
 sensor.reset()
@@ -20,7 +20,6 @@ roi_screen = [0, 0, width, height]
 message = 0
 while(True):
     pyb.LED(1).on()
-    pyb.LED(2).on()
 
     def communication(messageToSend):
         print(messageToSend)
@@ -49,6 +48,7 @@ while(True):
                             right_line = img.find_blobs(threshold_line, False, roi_right, area_threshold=900)
                             lower_line = img.find_blobs(threshold_line, False, roi_bottom, area_threshold=1500)
                         except:
+                            communication(9)
                             break
 
                         if len(upper_line) != 0:
@@ -78,6 +78,7 @@ while(True):
                             left_line_2 = img.find_blobs(threshold_line, False, roi_left_2, area_threshold=900)
                             right_line_2 = img.find_blobs(threshold_line, False, roi_right_2, area_threshold=900)
                         except:
+                            communication(9)
                             break
                         if len(upper_line_1) != 0:
                             if len(upper_line_2) != 0:
@@ -200,4 +201,5 @@ uart table:
 2 = right
 3 = trun around
 5 = blob detected
+9 = drive back
 """
