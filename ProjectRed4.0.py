@@ -12,7 +12,7 @@ pin = pyb.Pin("P7", pyb.Pin.OUT_PP)
 
 width = sensor.width()
 height = sensor.height()
-threshold_blobs = [(0, 50, -128, -13, -128, 127)]
+threshold_blobs = [(16, 57, -128, -18, -128, 127)]
 threshold_line = [(0, 27, -10, 38, -128, 127)]
 threshold_circle = [(0, 16, -128, 127, -128, 127)]
 threshold_zone = [(0, 31, -128, 127, -128, 127)]
@@ -21,6 +21,7 @@ roi_circles = [0, 0, int(width/2), height]
 blobs_y = []
 message = 0
 circle_area = 100
+zone_area = 12000
 min_r = 20
 max_r = 40
 
@@ -114,7 +115,7 @@ def circles():
 
 def zone():
     img = sensor.snapshot()
-    black = img.find_blobs(threshold_zone, area_threshold=12000)
+    black = img.find_blobs(threshold_zone, area_threshold=zone_area)
     if len(black) != 0:
         communication(6)
 
@@ -124,12 +125,13 @@ def lobby():
         while(1):
             circles()
     else:
-        circles()
+        main()
 
 def setup():
     pin.high()
     while(1):
         lobby()
+
 setup()
 """
 uart table:
