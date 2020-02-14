@@ -72,10 +72,18 @@ def main():
         elif len(rel_blobs) == 2:
             blob_1 = rel_blobs[0]
             blob_2 = rel_blobs[1]
+
             roi_bottom_1 = [blob_1.x(), blob_1.y()+blob_1.h(), blob_1.w(), height-(blob_1.y()+blob_1.h())]
             roi_bottom_2 = [blob_2.x(), blob_2.y()+blob_2.h(), blob_2.w(), height-(blob_2.y()+blob_2.h())]
 
-            message = 3
+            bottom_line_1 = img.find_blobs(threshold_line, False, roi_bottom_1, area_threshold=900)
+            bottom_line_2 = img.find_blobs(threshold_line, False, roi_bottom_2, area_threshold=900)
+
+            if len(bottom_line_1) != 0:
+                if len(bottom_line_2) != 0:
+                    message = 0
+            else:
+                message = 3
 
         blobs_y.clear()
         communication(message)
